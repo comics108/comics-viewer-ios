@@ -1,1 +1,2 @@
-# mahabharata-mobile-swift-v2012
+# mahabharata-ios
+ Mahabharata Gods and Heroes app

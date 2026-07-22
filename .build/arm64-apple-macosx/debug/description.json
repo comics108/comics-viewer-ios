@@ -1,0 +1,493 @@
+{
+  "builtTestProducts" : [
+
+  ],
+  "copyCommands" : {
+
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.ComicsViewer-arm64-apple-macosx-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/sources",
+      "importPath" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/AlphaAnim.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/Anim.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/RotateAnim.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/ScaleAnim.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/SoundAnim.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/TranslateAnim.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Comics.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Image.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Layer.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Sound.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Utils/AVPlayer+Fade.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Utils/ArchiveManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Utils/SoundManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Utils/String+Extension.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Views/ImageScrollView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Views/TileImageView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/ComicsViewer.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Puzzle/Models/Piece.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Puzzle/Models/Puzzle.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "ComicsViewer",
+      "moduleOutputPath" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/Modules/ComicsViewer.swiftmodule",
+      "objects" : [
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/AlphaAnim.swift.o",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Anim.swift.o",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/RotateAnim.swift.o",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ScaleAnim.swift.o",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/SoundAnim.swift.o",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/TranslateAnim.swift.o",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Comics.swift.o",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Image.swift.o",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Layer.swift.o",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Sound.swift.o",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/AVPlayer+Fade.swift.o",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ArchiveManager.swift.o",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/SoundManager.swift.o",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/String+Extension.swift.o",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ImageScrollView.swift.o",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/TileImageView.swift.o",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ComicsViewer.swift.o",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Piece.swift.o",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Puzzle.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx10.15",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j16",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/include/ComicsViewer-Swift.h",
+        "-swift-version",
+        "5",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "comics_viewer_ios"
+      ],
+      "outputFileMapPath" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/AlphaAnim.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Anim.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/RotateAnim.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ScaleAnim.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/SoundAnim.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/TranslateAnim.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Comics.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Image.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Layer.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Sound.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/AVPlayer+Fade.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ArchiveManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/SoundManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/String+Extension.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ImageScrollView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/TileImageView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ComicsViewer.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Piece.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Puzzle.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/Modules/ComicsViewer.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/AlphaAnim.swift",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/Anim.swift",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/RotateAnim.swift",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/ScaleAnim.swift",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/SoundAnim.swift",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/TranslateAnim.swift",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Comics.swift",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Image.swift",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Layer.swift",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Sound.swift",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Utils/AVPlayer+Fade.swift",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Utils/ArchiveManager.swift",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Utils/SoundManager.swift",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Utils/String+Extension.swift",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Views/ImageScrollView.swift",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Views/TileImageView.swift",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/ComicsViewer.swift",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Puzzle/Models/Piece.swift",
+        "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Puzzle/Models/Puzzle.swift"
+      ],
+      "tempsPath" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build",
+      "wholeModuleOptimization" : false
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "ComicsViewer" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "ComicsViewer",
+      "-package-name",
+      "comics_viewer_ios",
+      "-c",
+      "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/AlphaAnim.swift",
+      "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/Anim.swift",
+      "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/RotateAnim.swift",
+      "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/ScaleAnim.swift",
+      "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/SoundAnim.swift",
+      "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/TranslateAnim.swift",
+      "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Comics.swift",
+      "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Image.swift",
+      "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Layer.swift",
+      "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Sound.swift",
+      "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Utils/AVPlayer+Fade.swift",
+      "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Utils/ArchiveManager.swift",
+      "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Utils/SoundManager.swift",
+      "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Utils/String+Extension.swift",
+      "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Views/ImageScrollView.swift",
+      "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Views/TileImageView.swift",
+      "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/ComicsViewer.swift",
+      "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Puzzle/Models/Piece.swift",
+      "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Puzzle/Models/Puzzle.swift",
+      "-I",
+      "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx10.15",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j16",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/include/ComicsViewer-Swift.h",
+      "-swift-version",
+      "5",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "comics_viewer_ios",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "ComicsViewer" : [
+
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+
+  },
+  "traitConfiguration" : {
+    "default" : {
+
+    }
+  },
+  "writeCommands" : {
+    "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/AlphaAnim.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/Anim.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/RotateAnim.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/ScaleAnim.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/SoundAnim.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/TranslateAnim.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Comics.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Image.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Layer.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Sound.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Utils/AVPlayer+Fade.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Utils/ArchiveManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Utils/SoundManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Utils/String+Extension.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Views/ImageScrollView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Views/TileImageView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/ComicsViewer.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Puzzle/Models/Piece.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Puzzle/Models/Puzzle.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/sources"
+    },
+    "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+    }
+  }
+}

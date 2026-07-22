@@ -1,0 +1,138 @@
+{
+  "": {
+    "swift-dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/primary.swiftdeps"
+  },
+  "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/AlphaAnim.swift": {
+    "dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/AlphaAnim.d",
+    "object": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/AlphaAnim.swift.o",
+    "swiftmodule": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/AlphaAnim~partial.swiftmodule",
+    "swift-dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/AlphaAnim.swiftdeps",
+    "diagnostics": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/AlphaAnim.dia"
+  },
+  "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/Anim.swift": {
+    "dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Anim.d",
+    "object": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Anim.swift.o",
+    "swiftmodule": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Anim~partial.swiftmodule",
+    "swift-dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Anim.swiftdeps",
+    "diagnostics": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Anim.dia"
+  },
+  "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/RotateAnim.swift": {
+    "dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/RotateAnim.d",
+    "object": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/RotateAnim.swift.o",
+    "swiftmodule": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/RotateAnim~partial.swiftmodule",
+    "swift-dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/RotateAnim.swiftdeps",
+    "diagnostics": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/RotateAnim.dia"
+  },
+  "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/ScaleAnim.swift": {
+    "dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ScaleAnim.d",
+    "object": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ScaleAnim.swift.o",
+    "swiftmodule": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ScaleAnim~partial.swiftmodule",
+    "swift-dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ScaleAnim.swiftdeps",
+    "diagnostics": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ScaleAnim.dia"
+  },
+  "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/SoundAnim.swift": {
+    "dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/SoundAnim.d",
+    "object": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/SoundAnim.swift.o",
+    "swiftmodule": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/SoundAnim~partial.swiftmodule",
+    "swift-dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/SoundAnim.swiftdeps",
+    "diagnostics": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/SoundAnim.dia"
+  },
+  "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Animations/TranslateAnim.swift": {
+    "dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/TranslateAnim.d",
+    "object": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/TranslateAnim.swift.o",
+    "swiftmodule": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/TranslateAnim~partial.swiftmodule",
+    "swift-dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/TranslateAnim.swiftdeps",
+    "diagnostics": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/TranslateAnim.dia"
+  },
+  "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Comics.swift": {
+    "dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Comics.d",
+    "object": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Comics.swift.o",
+    "swiftmodule": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Comics~partial.swiftmodule",
+    "swift-dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Comics.swiftdeps",
+    "diagnostics": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Comics.dia"
+  },
+  "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Image.swift": {
+    "dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Image.d",
+    "object": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Image.swift.o",
+    "swiftmodule": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Image~partial.swiftmodule",
+    "swift-dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Image.swiftdeps",
+    "diagnostics": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Image.dia"
+  },
+  "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Layer.swift": {
+    "dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Layer.d",
+    "object": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Layer.swift.o",
+    "swiftmodule": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Layer~partial.swiftmodule",
+    "swift-dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Layer.swiftdeps",
+    "diagnostics": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Layer.dia"
+  },
+  "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Models/Sound.swift": {
+    "dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Sound.d",
+    "object": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Sound.swift.o",
+    "swiftmodule": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Sound~partial.swiftmodule",
+    "swift-dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Sound.swiftdeps",
+    "diagnostics": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Sound.dia"
+  },
+  "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Utils/AVPlayer+Fade.swift": {
+    "dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/AVPlayer+Fade.d",
+    "object": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/AVPlayer+Fade.swift.o",
+    "swiftmodule": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/AVPlayer+Fade~partial.swiftmodule",
+    "swift-dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/AVPlayer+Fade.swiftdeps",
+    "diagnostics": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/AVPlayer+Fade.dia"
+  },
+  "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Utils/ArchiveManager.swift": {
+    "dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ArchiveManager.d",
+    "object": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ArchiveManager.swift.o",
+    "swiftmodule": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ArchiveManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ArchiveManager.swiftdeps",
+    "diagnostics": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ArchiveManager.dia"
+  },
+  "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Utils/SoundManager.swift": {
+    "dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/SoundManager.d",
+    "object": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/SoundManager.swift.o",
+    "swiftmodule": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/SoundManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/SoundManager.swiftdeps",
+    "diagnostics": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/SoundManager.dia"
+  },
+  "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Utils/String+Extension.swift": {
+    "dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/String+Extension.d",
+    "object": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/String+Extension.swift.o",
+    "swiftmodule": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/String+Extension~partial.swiftmodule",
+    "swift-dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/String+Extension.swiftdeps",
+    "diagnostics": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/String+Extension.dia"
+  },
+  "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Views/ImageScrollView.swift": {
+    "dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ImageScrollView.d",
+    "object": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ImageScrollView.swift.o",
+    "swiftmodule": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ImageScrollView~partial.swiftmodule",
+    "swift-dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ImageScrollView.swiftdeps",
+    "diagnostics": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ImageScrollView.dia"
+  },
+  "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Comics/Views/TileImageView.swift": {
+    "dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/TileImageView.d",
+    "object": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/TileImageView.swift.o",
+    "swiftmodule": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/TileImageView~partial.swiftmodule",
+    "swift-dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/TileImageView.swiftdeps",
+    "diagnostics": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/TileImageView.dia"
+  },
+  "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/ComicsViewer.swift": {
+    "dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ComicsViewer.d",
+    "object": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ComicsViewer.swift.o",
+    "swiftmodule": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ComicsViewer~partial.swiftmodule",
+    "swift-dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ComicsViewer.swiftdeps",
+    "diagnostics": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/ComicsViewer.dia"
+  },
+  "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Puzzle/Models/Piece.swift": {
+    "dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Piece.d",
+    "object": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Piece.swift.o",
+    "swiftmodule": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Piece~partial.swiftmodule",
+    "swift-dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Piece.swiftdeps",
+    "diagnostics": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Piece.dia"
+  },
+  "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/Sources/ComicsViewer/Puzzle/Models/Puzzle.swift": {
+    "dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Puzzle.d",
+    "object": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Puzzle.swift.o",
+    "swiftmodule": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Puzzle~partial.swiftmodule",
+    "swift-dependencies": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Puzzle.swiftdeps",
+    "diagnostics": "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/Puzzle.dia"
+  }
+}

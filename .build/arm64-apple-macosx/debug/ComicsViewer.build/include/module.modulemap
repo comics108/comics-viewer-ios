@@ -1,0 +1,3 @@
+module ComicsViewer {
+    header "/Users/anton/proj/nativemind.net/comics.nativemind.net/libs/comics_viewer/comics-viewer-ios/.build/arm64-apple-macosx/debug/ComicsViewer.build/include/ComicsViewer-Swift.h"
+}

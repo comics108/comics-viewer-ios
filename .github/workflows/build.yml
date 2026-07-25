@@ -1,0 +1,39 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*.*.*"]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_16.app
+
+      - name: Swift version
+        run: swift --version
+
+      - name: Build (macOS)
+        run: swift build -v
+
+      - name: Test (macOS)
+        run: swift test -v
+
+      - name: Build for iOS Simulator
+        run: |
+          xcodebuild build \
+            -scheme ComicsViewer \
+            -destination "generic/platform=iOS Simulator" \
+            -skipMacroValidation

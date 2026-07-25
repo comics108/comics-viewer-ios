@@ -1,0 +1,27 @@
+name: Publish
+
+# Runs independently of build.yml: a failed publish must never mark the
+# build workflow (or this tag's commit status from build.yml) as failed.
+#
+# Swift Package Manager has no central registry — packages are "published"
+# simply by existing at a git tag. This job's only real job is to turn that
+# tag into a GitHub Release for changelog/discoverability purposes.
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true

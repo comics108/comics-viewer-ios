@@ -27,14 +27,17 @@ public class TileImageView: UIView {
 	let scale: CGFloat = 1.0	//at least for comics this is always true
 
 	public let image: Image
+	private let resources: ArchiveManager
 	var tiles = [String: UIImage]()
 	var tilesLoaded = false
+	private var loadGeneration = UUID()
 
 	override public class var layerClass: Swift.AnyClass {
 		return CATiledLayerNoAnim.self
 	}
 
 	public init(image: Image) {
+		self.resources = ArchiveManager.shared
 		self.image = image
 
 		super.init(frame: CGRect(x: 0, y: 0, width: image.width, height: image.height))
@@ -43,6 +46,20 @@ public class TileImageView: UIView {
 
 		if let tiledLayer = self.layer as? CATiledLayerNoAnim {
 			tiledLayer.levelsOfDetail = 1	//at least for comics this is always true
+			tiledLayer.tileSize = Constants.tileSize
+		}
+	}
+
+	public init(image: Image, resources: ArchiveManager) {
+		self.resources = resources
+		self.image = image
+
+		super.init(frame: CGRect(x: 0, y: 0, width: image.width, height: image.height))
+
+		self.backgroundColor = .clear
+
+		if let tiledLayer = self.layer as? CATiledLayerNoAnim {
+			tiledLayer.levelsOfDetail = 1
 			tiledLayer.tileSize = Constants.tileSize
 		}
 	}
@@ -119,14 +136,13 @@ public class TileImageView: UIView {
 		let firstRow = 0
 		let lastRow = Int(floor((CGFloat(self.image.height)) / Constants.tileWidth))
 
-		let arcMan = ArchiveManager()
-		arcMan.currentArchiveURL = ArchiveManager.shared.currentArchiveURL
+		let generation = loadGeneration
 
 		for row in firstRow...lastRow {
 			for col in firstCol...lastCol {
 				let tileName = self.tileName(for: self.scale, row: row, col: col)
-				arcMan.layer(name: tileName, success: { [weak self] (image) in
-					guard let self = self else { return }
+				resources.layer(name: tileName, success: { [weak self] (image) in
+					guard let self = self, self.loadGeneration == generation else { return }
 					self.tiles[tileName] = image
 					self.setNeedsDisplay()
 				})
@@ -136,6 +152,7 @@ public class TileImageView: UIView {
 
 	/// Clear all loaded tiles from memory
 	public func killTiles() {
+		loadGeneration = UUID()
 		self.tilesLoaded = false
 		self.tiles.removeAll()
 	}

@@ -11,19 +11,27 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: macos-15
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Select Xcode
         run: sudo xcode-select -s /Applications/Xcode_16.app
 
-      - name: Swift version
-        run: swift --version
+      - name: Toolchain versions
+        run: |
+          swift --version
+          xcodebuild -version
+
+      - name: Resolve dependencies
+        run: swift package resolve
 
       - name: Build (macOS)
         run: swift build -v
@@ -31,9 +39,21 @@ jobs:
       - name: Test (macOS)
         run: swift test -v
 
+      - name: Compile tests for iOS Simulator
+        run: >-
+          swift build --build-tests
+          --scratch-path "$RUNNER_TEMP/comics-viewer-ios-tests"
+          --triple arm64-apple-ios13.0-simulator
+          --sdk "$(xcrun --sdk iphonesimulator --show-sdk-path)"
+
       - name: Build for iOS Simulator
         run: |
+          package_dir="$RUNNER_TEMP/comics-viewer-package"
+          mkdir -p "$package_dir"
+          rsync -a Package.swift Package.resolved Sources Tests "$package_dir/"
+          cd "$package_dir"
           xcodebuild build \
             -scheme ComicsViewer \
             -destination "generic/platform=iOS Simulator" \
-            -skipMacroValidation
+            -skipMacroValidation \
+            CODE_SIGNING_ALLOWED=NO

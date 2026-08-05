@@ -2,8 +2,7 @@
 //  ComicsViewerController.swift
 //  ComicsViewer
 //
-//  Simplified controller for comics playback.
-//  Provides a unified API matching Android/Flutter/React Native interfaces.
+//  Unified controller used by native, Flutter, and React Native consumers.
 //
 
 import Foundation
@@ -12,96 +11,125 @@ import Foundation
 import UIKit
 
 public class ComicsViewerController {
-    // MARK: - Properties
     private let scrollView: ImageScrollView
-    private var comics: Comics?
+    private let archiveLoader: ComicsArchiveLoading
+    private let loadQueue: DispatchQueue
+
+    private var session: ComicsArchiveSession?
     private var playbackTimer: Timer?
-    private var _isPlaying: Bool = false
+    private var loadGeneration: UInt64 = 0
+    private var disposed = false
+    private var storedPreview = true
+    private var storedSounds = true
+    private var storedLanguage = 0
+    private var _isPlaying = false
 
-    // Playback settings
-    private static let playbackInterval: TimeInterval = 0.016 // ~60 FPS
-    private static let scrollSpeed: CGFloat = 2.0 // pixels per frame
+    private static let playbackInterval: TimeInterval = 0.016
+    private static let scrollSpeed: CGFloat = 2
 
-    // Callbacks
     public var onScrollChanged: ((CGFloat) -> Void)?
 
-    // Read-only properties
-    public var isPlaying: Bool {
-        return _isPlaying
-    }
-
-    public var duration: CGFloat {
-        return comics?.height ?? 0
-    }
-
-    public var currentPosition: CGFloat {
-        return scrollView.contentOffset.y
-    }
-
-    // MARK: - Initialization
+    public var isPlaying: Bool { _isPlaying }
+    public var duration: CGFloat { CGFloat(session?.comics.height ?? 0) }
+    public var currentPosition: CGFloat { scrollView.contentOffset.y }
 
     public init(scrollView: ImageScrollView) {
         self.scrollView = scrollView
-        setupScrollViewDelegate()
+        self.archiveLoader = ComicsArchiveLoader()
+        self.loadQueue = DispatchQueue(label: "net.nativemind.comics.viewer.load", qos: .userInitiated)
+        self.scrollView.scrollDelegate = self
     }
 
-    private func setupScrollViewDelegate() {
-        scrollView.scrollDelegate = self
+    init(
+        scrollView: ImageScrollView,
+        archiveLoader: ComicsArchiveLoading,
+        loadQueue: DispatchQueue
+    ) {
+        self.scrollView = scrollView
+        self.archiveLoader = archiveLoader
+        self.loadQueue = loadQueue
+        self.scrollView.scrollDelegate = self
     }
 
-    // MARK: - Load and Display
-
-    /**
-     * Load comics from file path.
-     */
-    public func loadComics(filePath: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            guard let self = self else { return }
-
-            let fileURL = URL(fileURLWithPath: filePath)
-
-            guard FileManager.default.fileExists(atPath: filePath) else {
-                DispatchQueue.main.async {
-                    completion(.failure(NSError(domain: "ComicsViewer", code: 404,
-                                                userInfo: [NSLocalizedDescriptionKey: "File not found: \(filePath)"])))
-                }
+    public func loadComics(
+        filePath: String,
+        completion: @escaping (Result<Void, Error>) -> Void
+    ) {
+        onMain { [weak self] in
+            guard let self, !self.disposed else {
+                completion(.failure(ComicsViewerError.disposed))
                 return
             }
 
-            guard let comics = ArchiveManager.loadComics(from: fileURL) else {
-                DispatchQueue.main.async {
-                    completion(.failure(NSError(domain: "ComicsViewer", code: 500,
-                                                userInfo: [NSLocalizedDescriptionKey: "Failed to load comics"])))
-                }
-                return
-            }
+            self.loadGeneration &+= 1
+            let generation = self.loadGeneration
+            let sourceURL = URL(fileURLWithPath: filePath)
+            let loader = self.archiveLoader
 
-            DispatchQueue.main.async {
-                self.comics = comics
-                self.scrollView.comics = comics
-                completion(.success(()))
+            self.loadQueue.async { [weak self] in
+                let result = Result { try loader.loadArchive(at: sourceURL) }
+                DispatchQueue.main.async {
+                    guard let self else {
+                        if case .success(let abandonedSession) = result {
+                            abandonedSession.dispose()
+                        }
+                        completion(.failure(ComicsViewerError.disposed))
+                        return
+                    }
+                    self.finishLoad(result, generation: generation, completion: completion)
+                }
             }
         }
     }
 
-    // MARK: - Playback Control
+    private func finishLoad(
+        _ result: Result<ComicsArchiveSession, Error>,
+        generation: UInt64,
+        completion: @escaping (Result<Void, Error>) -> Void
+    ) {
+        precondition(Thread.isMainThread)
+        guard !disposed, generation == loadGeneration else {
+            if case .success(let staleSession) = result {
+                staleSession.dispose()
+            }
+            completion(.failure(disposed ? ComicsViewerError.disposed : CancellationError()))
+            return
+        }
 
-    /**
-     * Start auto-scroll playback.
-     */
+        switch result {
+        case .failure(let error):
+            completion(.failure(error))
+        case .success(let newSession):
+            pauseNow()
+            scrollView.dispose()
+            session?.dispose()
+            session = newSession
+            scrollView.scrollDelegate = self
+            scrollView.showPreview = storedPreview
+            scrollView.soundEnabled = storedSounds
+            scrollView.languageIndex = storedLanguage
+            scrollView.install(comics: newSession.comics, resources: newSession.resources)
+            completion(.success(()))
+        }
+    }
+
     public func play() {
-        guard !_isPlaying, comics != nil else { return }
+        onMain { [weak self] in self?.playNow() }
+    }
 
+    private func playNow() {
+        guard !disposed, !_isPlaying, session != nil else { return }
         _isPlaying = true
         playbackTimer = Timer.scheduledTimer(withTimeInterval: Self.playbackInterval, repeats: true) { [weak self] _ in
             self?.updatePlayback()
         }
     }
 
-    /**
-     * Pause playback.
-     */
     public func pause() {
+        onMain { [weak self] in self?.pauseNow() }
+    }
+
+    private func pauseNow() {
         _isPlaying = false
         playbackTimer?.invalidate()
         playbackTimer = nil
@@ -109,81 +137,80 @@ public class ComicsViewerController {
 
     private func updatePlayback() {
         guard _isPlaying else { return }
-
-        let currentScroll = scrollView.contentOffset.y
-        let newScroll = currentScroll + Self.scrollSpeed
-
-        if newScroll >= duration {
-            // Reached end
-            pause()
+        let newPosition = scrollView.contentOffset.y + Self.scrollSpeed
+        guard newPosition < duration else {
+            pauseNow()
             return
         }
-
-        setScrollPosition(newScroll)
-        onScrollChanged?(newScroll)
+        setScrollPositionNow(newPosition)
     }
 
-    // MARK: - Navigation
-
-    /**
-     * Set scroll position.
-     */
     public func setScrollPosition(_ position: CGFloat) {
+        onMain { [weak self] in self?.setScrollPositionNow(position) }
+    }
+
+    private func setScrollPositionNow(_ position: CGFloat) {
+        guard !disposed, session != nil else { return }
         let boundedPosition = max(0, min(position, duration))
         scrollView.setContentOffset(CGPoint(x: 0, y: boundedPosition), animated: false)
-
-        // Process comics at this position
-        comics?.process(at: Int(boundedPosition))
+        scrollView.loadComics(scrollView: scrollView, sound: true)
     }
 
-    /**
-     * Get current scroll position.
-     */
     public func getScrollPosition() -> CGFloat {
-        return scrollView.contentOffset.y
+        currentPosition
     }
 
-    // MARK: - Preview & Sound
-
-    /**
-     * Toggle preview layers visibility.
-     */
     public func togglePreview(_ show: Bool) {
-        comics?.setPreview(show)
-        scrollView.setNeedsDisplay()
+        onMain { [weak self] in
+            guard let self, !self.disposed else { return }
+            self.storedPreview = show
+            self.scrollView.showPreview = show
+        }
     }
 
-    /**
-     * Toggle sound playback.
-     */
     public func toggleSounds(_ enabled: Bool) {
-        scrollView.soundEnabled = enabled
-        comics?.setSoundEnabled(enabled)
+        onMain { [weak self] in
+            guard let self, !self.disposed else { return }
+            self.storedSounds = enabled
+            self.scrollView.soundEnabled = enabled
+        }
     }
 
-    // MARK: - Language & Cleanup
-
-    /**
-     * Set language index (0-based).
-     */
     public func setLanguage(_ languageIndex: Int) {
-        scrollView.languageIndex = languageIndex
+        onMain { [weak self] in
+            guard let self, !self.disposed else { return }
+            self.storedLanguage = max(0, languageIndex)
+            self.scrollView.languageIndex = self.storedLanguage
+        }
     }
 
-    /**
-     * Release resources.
-     */
     public func dispose() {
-        pause()
-        comics?.dispose()
-        comics = nil
+        onMain { [weak self] in self?.disposeNow() }
+    }
+
+    private func disposeNow() {
+        guard !disposed else { return }
+        disposed = true
+        loadGeneration &+= 1
+        pauseNow()
+        scrollView.dispose()
+        session?.dispose()
+        session = nil
+        onScrollChanged = nil
+    }
+
+    private func onMain(_ work: @escaping () -> Void) {
+        if Thread.isMainThread {
+            work()
+        } else {
+            DispatchQueue.main.async(execute: work)
+        }
     }
 }
 
-// MARK: - ImageScrollViewDelegate
-
 extension ComicsViewerController: ImageScrollViewDelegate {
     public func imageScrollViewDidScroll(_ view: ImageScrollView) {
+        guard !disposed else { return }
         onScrollChanged?(view.contentOffset.y)
     }
 }

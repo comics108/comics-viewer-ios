@@ -14,13 +14,23 @@ let package = Package(
             name: "ComicsViewer",
             targets: ["ComicsViewer"]),
     ],
-    dependencies: [],
+    dependencies: [
+        .package(
+            url: "https://github.com/weichsel/ZIPFoundation.git",
+            .upToNextMinor(from: "0.9.20")
+        ),
+    ],
     targets: [
         .target(
             name: "ComicsViewer",
-            dependencies: []),
+            dependencies: [
+                .product(name: "ZIPFoundation", package: "ZIPFoundation"),
+            ]),
         .testTarget(
             name: "ComicsViewerTests",
-            dependencies: ["ComicsViewer"]),
+            dependencies: [
+                "ComicsViewer",
+                .product(name: "ZIPFoundation", package: "ZIPFoundation"),
+            ]),
     ]
 )

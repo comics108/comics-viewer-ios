@@ -2,8 +2,7 @@
 //  PuzzleViewerController.swift
 //  ComicsViewer
 //
-//  Simplified controller for puzzle interaction.
-//  Provides a unified API matching Android/Flutter/React Native interfaces.
+//  Puzzle facade sharing the same archive/session renderer as comics.
 //
 
 import Foundation
@@ -12,251 +11,262 @@ import Foundation
 import UIKit
 
 public class PuzzleViewerController {
-    // MARK: - Properties
+    private struct LoadedPiece {
+        let session: ComicsArchiveSession
+        let scrollView: ImageScrollView
+    }
+
+    private let archiveLoader: ComicsArchiveLoading
+    private let loadQueue: DispatchQueue
     private var puzzle: Puzzle?
-    private var pieceComics: [Int: Comics] = [:] // Map piece ID to Comics
-    private var pieceScrollViews: [Int: ImageScrollView] = [:] // Map piece ID to ScrollView
-    private var _currentPieceIndex: Int = 0
+    private var loadedPieces: [Int: LoadedPiece] = [:]
+    private var _currentPieceIndex = 0
     private var playbackTimer: Timer?
-    private var _isPlaying: Bool = false
+    private var _isPlaying = false
+    private var loadGeneration: UInt64 = 0
+    private var disposed = false
+    private var storedPreview = true
+    private var storedSounds = true
 
-    // Playback settings
-    private static let playbackInterval: TimeInterval = 0.016 // ~60 FPS
-    private static let scrollSpeed: CGFloat = 2.0 // pixels per frame
+    private static let playbackInterval: TimeInterval = 0.016
+    private static let scrollSpeed: CGFloat = 2
 
-    // Callbacks
     public var onPieceSelected: ((Int) -> Void)?
-
-    // Read-only properties
-    public var currentPieceIndex: Int {
-        return _currentPieceIndex
-    }
-
-    public var totalPieces: Int {
-        return puzzle?.pieces.count ?? 0
-    }
-
-    // MARK: - Initialization
+    public var currentPieceIndex: Int { _currentPieceIndex }
+    public var totalPieces: Int { puzzle?.pieces.count ?? 0 }
 
     public init() {
-        // Empty initializer
+        self.archiveLoader = ComicsArchiveLoader()
+        self.loadQueue = DispatchQueue(label: "net.nativemind.comics.viewer.puzzle-load", qos: .userInitiated)
     }
 
-    // MARK: - Load and Display
+    init(archiveLoader: ComicsArchiveLoading, loadQueue: DispatchQueue) {
+        self.archiveLoader = archiveLoader
+        self.loadQueue = loadQueue
+    }
 
-    /**
-     * Load puzzle from file path.
-     */
-    public func loadPuzzle(filePath: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            guard let self = self else { return }
-
-            let fileURL = URL(fileURLWithPath: filePath)
-
-            guard FileManager.default.fileExists(atPath: filePath) else {
-                DispatchQueue.main.async {
-                    completion(.failure(NSError(domain: "ComicsViewer", code: 404,
-                                                userInfo: [NSLocalizedDescriptionKey: "File not found: \(filePath)"])))
-                }
+    public func loadPuzzle(
+        filePath: String,
+        completion: @escaping (Result<Void, Error>) -> Void
+    ) {
+        onMain { [weak self] in
+            guard let self, !self.disposed else {
+                completion(.failure(ComicsViewerError.disposed))
                 return
             }
+            self.loadGeneration &+= 1
+            let generation = self.loadGeneration
+            let sourceURL = URL(fileURLWithPath: filePath).standardizedFileURL
+            let loader = self.archiveLoader
 
-            // Load puzzle metadata
-            guard let puzzleData = try? Data(contentsOf: fileURL),
-                  let puzzle = try? JSONDecoder().decode(Puzzle.self, from: puzzleData) else {
+            self.loadQueue.async { [weak self] in
+                let result = Result { try Self.loadPuzzle(sourceURL: sourceURL, loader: loader) }
                 DispatchQueue.main.async {
-                    completion(.failure(NSError(domain: "ComicsViewer", code: 500,
-                                                userInfo: [NSLocalizedDescriptionKey: "Failed to parse puzzle data"])))
-                }
-                return
-            }
-
-            // Load comics for each piece
-            let puzzleDir = fileURL.deletingLastPathComponent()
-            var loadedComics: [Int: Comics] = [:]
-
-            for piece in puzzle.pieces {
-                let pieceFileURL = puzzleDir.appendingPathComponent(piece.file)
-                if let comics = ArchiveManager.loadComics(from: pieceFileURL) {
-                    loadedComics[piece.id] = comics
-                }
-            }
-
-            DispatchQueue.main.async {
-                self.puzzle = puzzle
-                self.pieceComics = loadedComics
-
-                // Create scroll views for each piece
-                for piece in puzzle.pieces {
-                    if let comics = loadedComics[piece.id] {
-                        let scrollView = ImageScrollView()
-                        scrollView.comics = comics
-                        self.pieceScrollViews[piece.id] = scrollView
+                    guard let self else {
+                        if case .success((_, let sessions)) = result {
+                            sessions.values.forEach { $0.dispose() }
+                        }
+                        completion(.failure(ComicsViewerError.disposed))
+                        return
                     }
+                    self.finishLoad(result, generation: generation, completion: completion)
                 }
-
-                // Select first piece
-                if !puzzle.pieces.isEmpty {
-                    self._currentPieceIndex = 0
-                }
-
-                completion(.success(()))
             }
         }
     }
 
-    // MARK: - Piece Navigation
+    private static func loadPuzzle(
+        sourceURL: URL,
+        loader: ComicsArchiveLoading
+    ) throws -> (Puzzle, [Int: ComicsArchiveSession]) {
+        var isDirectory: ObjCBool = false
+        guard FileManager.default.fileExists(atPath: sourceURL.path, isDirectory: &isDirectory), !isDirectory.boolValue else {
+            throw ComicsViewerError.fileNotFound(sourceURL)
+        }
+        guard FileManager.default.isReadableFile(atPath: sourceURL.path) else {
+            throw ComicsViewerError.unreadableFile(sourceURL)
+        }
 
-    /**
-     * Select piece by index.
-     */
-    public func selectPiece(_ index: Int) {
-        guard let puzzle = puzzle, index >= 0, index < puzzle.pieces.count else {
+        let puzzle: Puzzle
+        do {
+            puzzle = try JSONDecoder().decode(Puzzle.self, from: Data(contentsOf: sourceURL))
+        } catch {
+            throw ComicsViewerError.invalidPuzzleData(error)
+        }
+
+        let baseURL = sourceURL.deletingLastPathComponent().standardizedFileURL
+        var sessions: [Int: ComicsArchiveSession] = [:]
+        do {
+            for piece in puzzle.pieces {
+                let pieceURL = baseURL.appendingPathComponent(piece.file).standardizedFileURL
+                guard !piece.file.isEmpty,
+                      !piece.file.contains("\\"),
+                      !(piece.file as NSString).isAbsolutePath,
+                      !piece.file.split(separator: "/").contains(".."),
+                      pieceURL.path.hasPrefix(baseURL.path + "/"),
+                      sessions[piece.id] == nil else {
+                    throw ComicsViewerError.missingPuzzlePiece(piece.file)
+                }
+                do {
+                    sessions[piece.id] = try loader.loadArchive(at: pieceURL)
+                } catch ComicsViewerError.fileNotFound(_) {
+                    throw ComicsViewerError.missingPuzzlePiece(piece.file)
+                }
+            }
+            return (puzzle, sessions)
+        } catch {
+            sessions.values.forEach { $0.dispose() }
+            throw error
+        }
+    }
+
+    private func finishLoad(
+        _ result: Result<(Puzzle, [Int: ComicsArchiveSession]), Error>,
+        generation: UInt64,
+        completion: @escaping (Result<Void, Error>) -> Void
+    ) {
+        precondition(Thread.isMainThread)
+        guard !disposed, generation == loadGeneration else {
+            if case .success((_, let sessions)) = result {
+                sessions.values.forEach { $0.dispose() }
+            }
+            completion(.failure(disposed ? ComicsViewerError.disposed : CancellationError()))
             return
         }
 
-        pause() // Stop playback when changing pieces
-
-        _currentPieceIndex = index
-        onPieceSelected?(index)
+        switch result {
+        case .failure(let error):
+            completion(.failure(error))
+        case .success((let newPuzzle, let sessions)):
+            disposeLoadedPieces()
+            puzzle = newPuzzle
+            _currentPieceIndex = 0
+            for piece in newPuzzle.pieces {
+                guard let session = sessions[piece.id] else { continue }
+                let view = ImageScrollView()
+                view.showPreview = storedPreview
+                view.soundEnabled = storedSounds
+                view.install(comics: session.comics, resources: session.resources)
+                loadedPieces[piece.id] = LoadedPiece(session: session, scrollView: view)
+            }
+            completion(.success(()))
+        }
     }
 
-    // MARK: - Playback Control
+    public func selectPiece(_ index: Int) {
+        onMain { [weak self] in
+            guard let self,
+                  !self.disposed,
+                  let puzzle = self.puzzle,
+                  index >= 0,
+                  index < puzzle.pieces.count else { return }
+            self.pauseNow()
+            self._currentPieceIndex = index
+            self.onPieceSelected?(index)
+        }
+    }
 
-    /**
-     * Start auto-scroll playback for current piece.
-     */
     public func play() {
-        guard !_isPlaying, let currentComics = getCurrentComics() else { return }
+        onMain { [weak self] in self?.playNow() }
+    }
 
+    private func playNow() {
+        guard !disposed, !_isPlaying, currentLoadedPiece() != nil else { return }
         _isPlaying = true
         playbackTimer = Timer.scheduledTimer(withTimeInterval: Self.playbackInterval, repeats: true) { [weak self] _ in
             self?.updatePlayback()
         }
     }
 
-    /**
-     * Pause playback.
-     */
     public func pause() {
+        onMain { [weak self] in self?.pauseNow() }
+    }
+
+    private func pauseNow() {
         _isPlaying = false
         playbackTimer?.invalidate()
         playbackTimer = nil
     }
 
     private func updatePlayback() {
-        guard _isPlaying,
-              let scrollView = getCurrentScrollView(),
-              let comics = getCurrentComics() else {
-            pause()
+        guard _isPlaying, let loaded = currentLoadedPiece() else {
+            pauseNow()
             return
         }
-
-        let currentScroll = scrollView.contentOffset.y
-        let newScroll = currentScroll + Self.scrollSpeed
-
-        if newScroll >= CGFloat(comics.height) {
-            // Reached end of current piece
-            pause()
+        let newPosition = loaded.scrollView.contentOffset.y + Self.scrollSpeed
+        guard newPosition < CGFloat(loaded.session.comics.height) else {
+            pauseNow()
             return
         }
-
-        scrollView.setContentOffset(CGPoint(x: 0, y: newScroll), animated: false)
-        comics.process(at: Int(newScroll))
+        loaded.scrollView.setContentOffset(CGPoint(x: 0, y: newPosition), animated: false)
+        loaded.scrollView.loadComics(scrollView: loaded.scrollView, sound: true)
     }
 
-    // MARK: - Preview & Sound
-
-    /**
-     * Toggle preview layers visibility for all pieces.
-     */
     public func togglePreview(_ show: Bool) {
-        for (_, comics) in pieceComics {
-            comics.setPreview(show)
-        }
-
-        for (_, scrollView) in pieceScrollViews {
-            scrollView.setNeedsDisplay()
+        onMain { [weak self] in
+            guard let self, !self.disposed else { return }
+            self.storedPreview = show
+            self.loadedPieces.values.forEach { $0.scrollView.showPreview = show }
         }
     }
 
-    /**
-     * Toggle sound playback for all pieces.
-     */
     public func toggleSounds(_ enabled: Bool) {
-        for (_, scrollView) in pieceScrollViews {
-            scrollView.soundEnabled = enabled
-        }
-
-        for (_, comics) in pieceComics {
-            comics.setSoundEnabled(enabled)
+        onMain { [weak self] in
+            guard let self, !self.disposed else { return }
+            self.storedSounds = enabled
+            self.loadedPieces.values.forEach { $0.scrollView.soundEnabled = enabled }
         }
     }
 
-    // MARK: - Cleanup
-
-    /**
-     * Release resources.
-     */
     public func dispose() {
-        pause()
+        onMain { [weak self] in self?.disposeNow() }
+    }
 
-        for (_, comics) in pieceComics {
-            comics.dispose()
-        }
-
-        pieceComics.removeAll()
-        pieceScrollViews.removeAll()
+    private func disposeNow() {
+        guard !disposed else { return }
+        disposed = true
+        loadGeneration &+= 1
+        pauseNow()
+        disposeLoadedPieces()
         puzzle = nil
+        onPieceSelected = nil
     }
 
-    // MARK: - Helper Methods
+    private func disposeLoadedPieces() {
+        pauseNow()
+        for loaded in loadedPieces.values {
+            loaded.scrollView.dispose()
+            loaded.session.dispose()
+        }
+        loadedPieces.removeAll()
+    }
 
-    /**
-     * Get current piece comics.
-     */
-    private func getCurrentComics() -> Comics? {
-        guard let puzzle = puzzle, _currentPieceIndex < puzzle.pieces.count else {
+    private func currentLoadedPiece() -> LoadedPiece? {
+        guard let puzzle, _currentPieceIndex >= 0, _currentPieceIndex < puzzle.pieces.count else {
             return nil
         }
-        let pieceId = puzzle.pieces[_currentPieceIndex].id
-        return pieceComics[pieceId]
+        return loadedPieces[puzzle.pieces[_currentPieceIndex].id]
     }
 
-    /**
-     * Get current piece scroll view.
-     */
-    private func getCurrentScrollView() -> ImageScrollView? {
-        guard let puzzle = puzzle, _currentPieceIndex < puzzle.pieces.count else {
-            return nil
-        }
-        let pieceId = puzzle.pieces[_currentPieceIndex].id
-        return pieceScrollViews[pieceId]
-    }
-
-    /**
-     * Get scroll view for piece index (for adding to layout).
-     */
     public func getScrollView(forPieceIndex index: Int) -> ImageScrollView? {
-        guard let puzzle = puzzle, index >= 0, index < puzzle.pieces.count else {
-            return nil
-        }
-        let pieceId = puzzle.pieces[index].id
-        return pieceScrollViews[pieceId]
+        guard let puzzle, index >= 0, index < puzzle.pieces.count else { return nil }
+        return loadedPieces[puzzle.pieces[index].id]?.scrollView
     }
 
-    /**
-     * Get current scroll view (for adding to layout).
-     */
     public func getCurrentScrollView() -> ImageScrollView? {
-        return getScrollView(forPieceIndex: _currentPieceIndex)
+        currentLoadedPiece()?.scrollView
     }
 
-    /**
-     * Get puzzle model.
-     */
     public func getPuzzle() -> Puzzle? {
-        return puzzle
+        puzzle
+    }
+
+    private func onMain(_ work: @escaping () -> Void) {
+        if Thread.isMainThread {
+            work()
+        } else {
+            DispatchQueue.main.async(execute: work)
+        }
     }
 }
 

@@ -17,12 +17,42 @@ import AppKit
 public final class ArchiveManager {
 	public static let shared = ArchiveManager()
 
-	public var currentArchiveURL: URL?
+	private let fixedArchiveURL: URL?
+	private var legacyArchiveURL: URL?
 
-	public init() {}
+	public var currentArchiveURL: URL? {
+		get { fixedArchiveURL ?? legacyArchiveURL }
+		set {
+			guard fixedArchiveURL == nil else { return }
+			legacyArchiveURL = newValue?.standardizedFileURL
+		}
+	}
+
+	public init() {
+		self.fixedArchiveURL = nil
+	}
+
+	public init(rootURL: URL) {
+		self.fixedArchiveURL = rootURL.standardizedFileURL
+	}
+
+	private func resourceURL(directory: String? = nil, name: String) -> URL? {
+		guard let rootURL = currentArchiveURL?.standardizedFileURL,
+			!name.isEmpty,
+			!name.contains("\\"),
+			!(name as NSString).isAbsolutePath,
+			!name.split(separator: "/", omittingEmptySubsequences: false).contains("..")
+		else { return nil }
+
+		let baseURL = directory.map { rootURL.appendingPathComponent($0, isDirectory: true) } ?? rootURL
+		let candidate = baseURL.appendingPathComponent(name).standardizedFileURL
+		let basePath = baseURL.standardizedFileURL.path
+		guard candidate.path == basePath || candidate.path.hasPrefix(basePath + "/") else { return nil }
+		return candidate
+	}
 
 	public func comics(success: (Comics?) -> ()) {
-		if let path = self.currentArchiveURL?.appendingPathComponent("data.json").relativePath,
+		if let path = self.resourceURL(name: "data.json")?.path,
 			FileManager.default.fileExists(atPath: path) {
 			do {
 				let decoder = JSONDecoder()
@@ -41,15 +71,15 @@ public final class ArchiveManager {
 
 	#if canImport(UIKit)
 	public func layer(name: String, success: @escaping (UIImage) -> ()) {
-		guard let path = self.currentArchiveURL?.appendingPathComponent("layers").appendingPathComponent(name).relativePath
+		guard let path = self.resourceURL(directory: "layers", name: name)?.path
 			else { return }
 
 		if !FileManager.default.fileExists(atPath: path) {
 			success(UIImage())
 		} else {
 			DispatchQueue.global().async {
-				let imageData = try! NSData(contentsOfFile: path, options: []) as Data
-				if let image = UIImage(data: imageData, scale: UIScreen.main.scale) {
+				let imageData = try? Data(contentsOf: URL(fileURLWithPath: path))
+				if let imageData, let image = UIImage(data: imageData, scale: UIScreen.main.scale) {
 					DispatchQueue.main.async {
 						success(image)
 					}
@@ -63,15 +93,15 @@ public final class ArchiveManager {
 	}
 	#elseif canImport(AppKit)
 	public func layer(name: String, success: @escaping (NSImage) -> ()) {
-		guard let path = self.currentArchiveURL?.appendingPathComponent("layers").appendingPathComponent(name).relativePath
+		guard let path = self.resourceURL(directory: "layers", name: name)?.path
 			else { return }
 
 		if !FileManager.default.fileExists(atPath: path) {
 			success(NSImage())
 		} else {
 			DispatchQueue.global().async {
-				let imageData = try! NSData(contentsOfFile: path, options: []) as Data
-				if let image = NSImage(data: imageData) {
+				let imageData = try? Data(contentsOf: URL(fileURLWithPath: path))
+				if let imageData, let image = NSImage(data: imageData) {
 					DispatchQueue.main.async {
 						success(image)
 					}
@@ -86,7 +116,7 @@ public final class ArchiveManager {
 	#endif
 
 	public func sound(name: String, success: @escaping (URL?) -> ()) {
-		guard let path = self.currentArchiveURL?.appendingPathComponent("sounds").appendingPathComponent(name).relativePath
+		guard let path = self.resourceURL(directory: "sounds", name: name)?.path
 			else { return }
 
 		if !FileManager.default.fileExists(atPath: path) {

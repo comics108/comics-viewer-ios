@@ -13,6 +13,8 @@ A standalone Swift Package for rendering interactive comics and puzzles on iOS a
 - **Local Files Only**: Works with local .comics files (ZIP archives), no network dependencies
 - **Simple API**: Just 5 main methods for comics playback control
 
+`ComicsViewerController` accepts the archived `.comics` file directly. Each load is extracted into an isolated temporary session; tiles and sounds are resolved from that session rather than global mutable archive state.
+
 ## Installation
 
 ### Swift Package Manager
@@ -95,6 +97,8 @@ controller.loadComics(filePath: comicsPath) { result in
     }
 }
 ```
+
+The completion and controller callbacks are delivered on the main thread. If two loads overlap, the newest load wins and the stale completion fails with cancellation. Replacing a document or calling `dispose()` removes only the temporary directory owned by that session.
 
 **2. Playback Control**
 
@@ -219,6 +223,10 @@ A .comics file is a ZIP archive containing:
 - `layers/` - Layer images (PNG)
 - `sounds/` - Audio files (MP3)
 
+For safety, archive paths must be relative and contained, symbolic links are rejected, and `data.json` must be a regular root entry. The loader accepts at most 10,000 entries, 256 MiB per entry, and 1 GiB total uncompressed data.
+
+Load failures are reported as `ComicsViewerError` values such as `fileNotFound`, `invalidArchive`, `unsafeArchiveEntry`, `archiveLimitExceeded`, `missingDataJSON`, and `invalidComicsData`.
+
 **Example usage:**
 
 ```swift
@@ -320,23 +328,42 @@ net.nativemind.comics.viewer
 
 ## Advanced Usage
 
-### Direct Access to Internal Components
+### Legacy Directory Access
 
-For advanced use cases, you can still access internal components:
+`ArchiveManager.shared` remains available for source compatibility with callers that already have an extracted archive directory. New controller integrations should not use it: the controller creates a root-bound manager for every load and every puzzle piece.
 
 ```swift
 import ComicsViewer
 
-// Low-level API
-let comicsURL = URL(fileURLWithPath: "/path/to/file.comics")
-if let comics = ArchiveManager.loadComics(from: comicsURL) {
-    scrollView.setComics(comics, from: comicsURL)
-    scrollView.languageIndex = 0
-    scrollView.soundEnabled = true
+ArchiveManager.shared.currentArchiveURL = URL(fileURLWithPath: "/path/to/extracted/archive")
+ArchiveManager.shared.comics { comics in
+    scrollView.comics = comics
 }
 ```
 
 **Note:** Using `ComicsViewerController` is recommended for most use cases.
+
+## Local Verification
+
+```bash
+swift package resolve
+swift build -v
+swift test -v
+
+swift build --build-tests \
+  --triple arm64-apple-ios13.0-simulator \
+  --sdk "$(xcrun --sdk iphonesimulator --show-sdk-path)"
+```
+
+This repository also contains the legacy `Mahabharata.xcodeproj`. To run the Xcode Swift Package build, stage `Package.swift`, `Package.resolved`, `Sources`, and `Tests` in a clean temporary directory first, then run:
+
+```bash
+xcodebuild build \
+  -scheme ComicsViewer \
+  -destination "generic/platform=iOS Simulator" \
+  -skipMacroValidation \
+  CODE_SIGNING_ALLOWED=NO
+```
 
 ## License
 

@@ -56,16 +56,45 @@ public class ImageScrollView: UIScrollView, UIScrollViewDelegate {
 			if let comics = comics {
 				comics.prepare()
 				self.displayTiles()
+			} else {
+				self.removeTiles()
 			}
 		}
 	}
 
 	public weak var scrollDelegate: ImageScrollViewDelegate?
-	public var soundEnabled: Bool = true
-	public var languageIndex: Int = 0
+	public var soundEnabled: Bool = true {
+		didSet {
+			guard oldValue != soundEnabled else { return }
+			if soundEnabled {
+				mute(false)
+			} else {
+				stopAllSounds()
+			}
+		}
+	}
+	private var storedLanguageIndex = 0
+	public var languageIndex: Int {
+		get { storedLanguageIndex }
+		set {
+			let normalized = max(0, newValue)
+			guard normalized != storedLanguageIndex else { return }
+			storedLanguageIndex = normalized
+			reloadLanguage()
+		}
+	}
+	public var showPreview = true {
+		didSet {
+			guard oldValue != showPreview, comics != nil else { return }
+			displayTiles()
+		}
+	}
+	private var resources: ArchiveManager?
 
 	let tilesContainer = UIView()
-	var tilingViews = [TileImageView]()
+	private var contentConstraints = [NSLayoutConstraint]()
+	var layerTiles = [(layer: Layer, tile: TileImageView)]()
+	var tilingViews: [TileImageView] { layerTiles.map(\.tile) }
 
 	public var isComics = true
 
@@ -90,8 +119,22 @@ public class ImageScrollView: UIScrollView, UIScrollViewDelegate {
 	}
 
 	//MARK: - Functionality
+	public func install(comics: Comics, resources: ArchiveManager) {
+		self.resources = resources
+		self.comics = comics
+	}
+
+	public func dispose() {
+		stopAllSounds()
+		scrollDelegate = nil
+		resources = nil
+		comics = nil
+		contentOffset = .zero
+		previousContentOffset = -1
+	}
+
 	public func updateTiles() {
-		//TODO: Update everything I guess
+		displayTiles()
 	}
 
 	//MARK: - UIScrollViewDelegate
@@ -102,6 +145,7 @@ public class ImageScrollView: UIScrollView, UIScrollViewDelegate {
 	//MARK: - Configure scrollView to display tiles
 	func displayTiles() {
 		guard let comics = self.comics, comics.width > 0 else { return }
+		removeTiles()
 
 		//For comics mode zoomScale is fixed
 		if self.isComics {
@@ -116,94 +160,64 @@ public class ImageScrollView: UIScrollView, UIScrollViewDelegate {
 		let scaledHeight = CGFloat(comics.height) * self.zoomScale
 
 		//Add container
-		self.addSubview(self.tilesContainer)
-		self.tilesContainer.translatesAutoresizingMaskIntoConstraints = false
-		NSLayoutConstraint.activate([
+		if self.tilesContainer.superview == nil {
+			self.addSubview(self.tilesContainer)
+			self.tilesContainer.translatesAutoresizingMaskIntoConstraints = false
+		}
+		NSLayoutConstraint.deactivate(contentConstraints)
+		contentConstraints = [
 			self.tilesContainer.topAnchor.constraint(equalTo: self.topAnchor),
 			self.tilesContainer.leadingAnchor.constraint(equalTo: self.leadingAnchor),
 			self.tilesContainer.trailingAnchor.constraint(equalTo: self.trailingAnchor),
 			self.tilesContainer.bottomAnchor.constraint(equalTo: self.bottomAnchor),
 			self.tilesContainer.widthAnchor.constraint(equalToConstant: CGFloat(comics.width)),
 			self.tilesContainer.heightAnchor.constraint(equalToConstant: CGFloat(comics.height))
-		])
+		]
+		NSLayoutConstraint.activate(contentConstraints)
 
 		self.contentSize = CGSize(width: scaledWidth, height: scaledHeight)
 		self.tilesContainer.backgroundColor = .black
 
 		//Add tiles
-		for layer in comics.layers.enumerated() {
-			if let image = layer.element.image(languageIndex: self.languageIndex) {
-				let tile = TileImageView(image: image)
+		let resources = resources ?? ArchiveManager.shared
+		for layer in visibleLayers(in: comics) {
+			if let image = layer.image(languageIndex: self.languageIndex) {
+				let tile = TileImageView(image: image, resources: resources)
 
-				self.tilingViews.append(tile)
+				self.layerTiles.append((layer, tile))
 				self.tilesContainer.addSubview(tile)
 			}
 		}
 
 		//Force to load first screen of comics
-		DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-			self.scrollViewDidScroll(self)
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+			guard let self, self.comics === comics else { return }
+			self.loadComics(scrollView: self, sound: false)
 		}
 	}
 
-	private func addTiles() {
-		guard let comics = self.comics else { return }
+	private func visibleLayers(in comics: Comics) -> [Layer] {
+		comics.layers.filter { showPreview || !$0.isPreview }
+	}
 
-		for layer in comics.layers.enumerated() {
-			if let image = layer.element.image(languageIndex: self.languageIndex) {
-				let tile = TileImageView(image: image)
-
-				self.tilingViews.append(tile)
-				self.tilesContainer.addSubview(tile)
-			}
+	private func removeTiles() {
+		for binding in layerTiles {
+			binding.tile.killTiles()
+			binding.tile.removeFromSuperview()
 		}
+		layerTiles.removeAll()
 	}
 
 	private var isReloading = false
 
 	/// Reload tiles after language change
 	public func reloadLanguage() {
-		guard !isReloading else {
-			return
-		}
-
+		guard comics != nil, !isReloading else { return }
 		isReloading = true
-
-		//Remove old tiles/UIImages to free memory
-		var hiddenTiles: [TileImageView] = []
-		var visibleTiles: [TileImageView] = []
-
-		let visibleRectHeight = self.frame.size.height / self.zoomScale
-		let visibleRectWidth = self.frame.size.width / self.zoomScale
-		let intersectRect = CGRect(x: -visibleRectWidth, y: self.contentOffset.y / self.zoomScale - visibleRectHeight,
-								   width: visibleRectWidth * 3, height: visibleRectHeight * 3)
-		for tile in self.tilingViews {
-			if !tile.frame.intersects(intersectRect) {
-				hiddenTiles.append(tile)
-			} else {
-				visibleTiles.append(tile)
-			}
+		displayTiles()
+		if zoomScale > 0 {
+			loadComics(scrollView: self, sound: false)
 		}
-
-		//Forget all tiles
-		self.tilingViews = []
-
-		//Remove only invisible tiles
-		for tile in hiddenTiles {
-			tile.removeFromSuperview()
-		}
-
-		//Add tiles with info about images to reload. They are not actually reloaded until scroll
-		self.addTiles()
-
-		//Reload tiles to visible frame (without playing music again)
-		self.loadComics(scrollView: self, sound: false)
-
-		//Remove tiles that are visible/near to visible
-		for tile in visibleTiles {
-			tile.removeFromSuperview()
-		}
-
 		isReloading = false
 	}
 
@@ -217,7 +231,7 @@ public class ImageScrollView: UIScrollView, UIScrollViewDelegate {
 	}
 
 	func loadComics(scrollView: UIScrollView, sound: Bool) {
-		guard let comics = self.comics else { return }
+		guard let comics = self.comics, self.zoomScale > 0 else { return }
 
 		if scrollView.contentOffset.y < 0.0 {
 			previousContentOffset = scrollView.contentOffset.y
@@ -232,10 +246,10 @@ public class ImageScrollView: UIScrollView, UIScrollViewDelegate {
 		let intersectRect = CGRect(x: -visibleRectWidth, y: scrollView.contentOffset.y / self.zoomScale - visibleRectHeight,
 										width: visibleRectWidth * 3, height: visibleRectHeight * 3)
 
-		for layer in comics.layers.enumerated() {
-			let tile = self.tilingViews[layer.offset]
-			tile.transform = CATransform3DGetAffineTransform(layer.element.matrix)
-			tile.alpha = CGFloat(layer.element.alpha)
+		for binding in layerTiles {
+			let tile = binding.tile
+			tile.transform = CATransform3DGetAffineTransform(binding.layer.matrix)
+			tile.alpha = CGFloat(binding.layer.alpha)
 
 			let intersects = tile.frame.intersects(intersectRect)
 			if intersects {
@@ -297,6 +311,7 @@ public class ImageScrollView: UIScrollView, UIScrollViewDelegate {
 	}
 
 	private func playSound(animation: SoundAnim, file: String) {
+		guard let resourceContext = resources else { return }
 
 		animation.isPlaying = true
 
@@ -321,11 +336,12 @@ public class ImageScrollView: UIScrollView, UIScrollViewDelegate {
 			}
 			#endif
 
-			DispatchQueue.main.async {
-				//Get sound from archive
-				let arcMan = ArchiveManager()
-				arcMan.currentArchiveURL = ArchiveManager.shared.currentArchiveURL
-				arcMan.sound(name: file, success: { (url) in
+			DispatchQueue.main.async { [weak self] in
+				guard let self, self.resources === resourceContext else {
+					animation.isPlaying = false
+					return
+				}
+				resourceContext.sound(name: file, success: { (url) in
 					if let url = url, let player = animation.player {
 						//play sound from extracted data
 						player.play(url: url, loop: animation.start != animation.end)
@@ -340,7 +356,7 @@ public class ImageScrollView: UIScrollView, UIScrollViewDelegate {
 
 	private func stopSound(animation: SoundAnim) {
 		animation.isPlaying = false
-		animation.player!.fadeOut(to: 0, duration: 0.6)
+		animation.player?.fadeOut(to: 0, duration: 0.6)
 	}
 
 	private func toggleSounds(play: Bool) {
@@ -386,6 +402,17 @@ public class ImageScrollView: UIScrollView, UIScrollViewDelegate {
 						animation.isPlaying = !muted
 					}
 				}
+			}
+		}
+	}
+
+	private func stopAllSounds() {
+		guard let comics = self.comics else { return }
+		for sound in comics.sounds {
+			for animation in sound.animations {
+				animation.player?.stop()
+				animation.player = nil
+				animation.isPlaying = false
 			}
 		}
 	}
